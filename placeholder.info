@@ -2,3 +2,5 @@ name = Placeholder
 description = Add support for HTML5 placeholder element, with backward browser compatibility.
 core = 7.x
 package = Other
+
+dependencies[] = libraries

@@ -34,28 +34,46 @@ function placeholder_process_placeholder($element) {
     // If the placeholder FAPI property is set, simply add it to the form's
     // attributes so it will be output in the HTML tag.
     $element['#attributes']['placeholder'] = $element['#placeholder'];
-    drupal_add_library('placeholder', 'placeholder');
+    // Add the library if it's available.
+    if (($library = libraries_load('placeholder', 'minified')) && !empty($library['loaded'])) {
+      libraries_load_files($library);
+      $element['#attached']['js'] = array(
+        drupal_get_path('module', 'placeholder') . '/placeholder.js',
+      );
+    }
   }
   return $element;
 }
 
 /**
- * Implements hook_library().
+ * Implements hook_libraries_info().
  */
-function placeholder_library() {
+function placeholder_libraries_info() {
   $libraryes = array();
 
   $libraries['placeholder'] = array(
     'title' => 'jQuery-Placeholder', 
-    'website' => 'https://github.com/danielstocks/jQuery-Placeholder', 
-    'version' => '1.0', 
-    'js' => array(
-      drupal_get_path('module', 'placeholder') . '/js/placeholder.min.js' => array(),
+    'vendor url' => 'https://github.com/danielstocks/jQuery-Placeholder', 
+    'version' => '1.0',
+    'files' => array(
+      'js' => array(
+        'jquery.placeholder.js',
+      ),
     ),
-    'dependencies' => array(
-      array('system', 'jquery'),
+    'variants' => array(
+      'minified' => array(
+        'files' => array(
+          'js' => array(
+            'jquery.placeholder.min.js',
+          ),
+        ),
+      ),
     ),
   );
 
   return $libraries;
+}
+
+function placeholder_form_search_block_form_alter(&$form, &$form_state) {
+  $form['search_block_form']['#placeholder'] = t('Search...');
 }
