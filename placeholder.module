@@ -37,6 +37,7 @@ function placeholder_process_placeholder($element) {
     // Add the library if it's available.
     if (($library = libraries_load('placeholder', 'minified')) && !empty($library['loaded'])) {
       libraries_load_files($library);
+      // Attach our js file, to actually use the library.
       $element['#attached']['js'] = array(
         drupal_get_path('module', 'placeholder') . '/placeholder.js',
       );
