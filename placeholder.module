@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Placeholder module file.
+ */
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function placeholder_element_info_alter(&$types) {
+  // Add placeholder support to textfields and textareas.
+  foreach (array_keys($types) as $type) {
+    switch ($type) {
+      case 'textfield':
+      case 'textarea':
+        $types[$type]['#process'][] = 'placeholder_process_placeholder';
+        break;
+    }
+  }
+}
+
+/**
+ * Element process callback; adds support for the HTML5 placeholder attribute.
+ *
+ * @param $element
+ *   An associative array containing the properties of the element.
+ *
+ * @return
+ *   The processed element.
+ */
+function placeholder_process_placeholder($element) {
+  if (isset($element['#placeholder']) && !isset($element['#attributes']['placeholder'])) {
+    // If the placeholder FAPI property is set, simply add it to the form's
+    // attributes so it will be output in the HTML tag.
+    $element['#attributes']['placeholder'] = $element['#placeholder'];
+    drupal_add_library('placeholder', 'placeholder');
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_library().
+ */
+function placeholder_library() {
+  $libraryes = array();
+
+  $libraries['placeholder'] = array(
+    'title' => 'jQuery-Placeholder', 
+    'website' => 'https://github.com/danielstocks/jQuery-Placeholder', 
+    'version' => '1.0', 
+    'js' => array(
+      drupal_get_path('module', 'placeholder') . '/js/placeholder.min.js' => array(),
+    ),
+    'dependencies' => array(
+      array('system', 'jquery'),
+    ),
+  );
+
+  return $libraries;
+}
