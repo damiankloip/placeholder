@@ -9,7 +9,6 @@
  * Implements hook_element_info_alter().
  */
 function placeholder_element_info_alter(&$types) {
-  // Add placeholder support to textfields and textareas.
   foreach (array_keys($types) as $type) {
     switch ($type) {
       case 'textfield':

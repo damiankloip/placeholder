@@ -8,12 +8,24 @@ INSTALLATION
 USAGE
 
 - Add a '#placeholder' key or a 'placeholder' element to the '#attributes'
-  array to textfield or textareas.
+  array of textfields or textareas.
 
-E.g.
+Examples
 
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function placeholder_form_search_block_form_alter(&$form, &$form_state) {
   $form['search_block_form']['#placeholder'] = t('Search here');
   // or ....
   $form['search_block_form']['#attributes']['placeholder'] = t('Search here');
+}
+
+function my_custom_module_form() {
+  $form['name'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Name',
+    '#placeholder' => t('Enter your name here'),
+  );
+  // ....
 }
