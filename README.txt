@@ -4,6 +4,8 @@ INSTALLATION
 - Download jQuery-Placeholder library from https://github.com/danielstocks/jQuery-Placeholder
 - Place this library in sites/[all/sitename/default]/libraries/placeholder
   so the jquery.placeholder.js is located at sites/[all/sitename/default]/libraries/placeholder/jquery.placeholder.js
+  or glone directly; 'git clone --recursive git://github.com/danielstocks/jQuery-Placeholder.git placeholder'
+  in your libraries folder.
 
 USAGE
 
